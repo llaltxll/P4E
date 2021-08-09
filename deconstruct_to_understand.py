@@ -20,7 +20,7 @@ for line in fhand:
 
 	print("check what line.find('@utc.ac.za') returnes: ", line.find('@utc.ac.za'))
 	print("check what line.find('@utc.ac.za') == -1 returnes: ", line.find('@utc.ac.za') ==-1)
-	if line.find('@utc.ac.za') == -1: # try replacing line.find('@utc.ac.za') with True or False and see what gets executed using the print statments below
+	if line.find('@utc.ac.za') == -1: # try replacing line.find('@uct.ac.za') with True or False and see what gets executed using the print statments below
 		print("line.find('@utc.ac.za') == -1, continue will be executed next")
 		continue
 	print("line.find('@utc.ac.za != -1, continue was not executed the rest of the loop will")

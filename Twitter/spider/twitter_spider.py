@@ -1,4 +1,5 @@
-from twitter_user_followers_by_username import *
+# import the functions to get user friends list by user name from the 2.0 API
+import twitter_user_followers_by_username as tuser
 from friends_list_response import js_dummy
 import sqlite3
 
@@ -22,11 +23,11 @@ while True:
 			continue
 	# js dummy for testing
 	# js = js_dummy
-	user_id = get_userID(acct)
-	url = create_url(user_id)
+	user_id = tuser.get_userID(acct)
+	url = tuser.create_url(user_id)
 	params = {"user.fields": "pinned_tweet_id",
 		"max_results": 20}
-	js = connect_to_endpoint(url, params)
+	js = tuser.connect_to_endpoint(url, params)
 	# print(json.dumps(js, indent=4, sort_keys=True))
 
 	cur.execute('UPDATE Twitter SET retrieved=1 WHERE name = ?', (acct, ))

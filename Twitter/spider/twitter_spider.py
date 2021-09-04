@@ -21,10 +21,13 @@ while True:
 		except:
 			print('No unretrieved Twitter acounts found')
 			continue
+
+	# This is modified to use the functions written in asaeparate file for 2.0 copatability
 	# js dummy for testing
 	# js = js_dummy
 	user_id = tuser.get_userID(acct)
 	url = tuser.create_url(user_id)
+	# in params we ask for the pinned tweet for eavh user and limit the results to 20 users
 	params = {"user.fields": "pinned_tweet_id",
 		"max_results": 20}
 	js = tuser.connect_to_endpoint(url, params)
@@ -34,10 +37,12 @@ while True:
 
 	countnew = 0
 	countold = 0
-	# incase the current account has no friends marks account as retrieved in db an continue
+
+	# in case the current account has no friends marks account as retrieved in db an continue
 	if 'data' not in js:
 		cur.execute('UPDATE Twitter SET retrieved = 1 WHERE name = ?', (acct, ))
 		continue
+
 	for u in js['data']:
 		friend = u['username']
 		print(friend)

@@ -4,3 +4,4 @@ Twitter/spider/__pycache__/
 __pycache__/
 Twitter/spider/spider.sqlite
 *.pyc
+*.sqlite

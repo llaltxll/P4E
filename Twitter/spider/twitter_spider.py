@@ -2,6 +2,7 @@ from twitter_user_followers_by_username import *
 from friends_list_response import js_dummy
 import sqlite3
 
+
 conn = sqlite3.connect('spider.sqlite')
 cur = conn.cursor()
 

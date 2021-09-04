@@ -15,6 +15,7 @@ while True:
 	acct = input('Enter a twitter account, or quit: ')
 	if (acct == 'quit'): break
 	if (len(acct) < 1):
+		# use unretrieved account from DB
 		cur.execute('SELECT id, name FROM People WHERE retrieved = 0 LIMIT 1')
 		try:
 			(id, acct) = cur.fetchone()
@@ -22,6 +23,7 @@ while True:
 			print('No unretrieved Twitter acounts found')
 			continue
 	else:
+		# check if account exists, use existing account id, if not create new entry
 		cur.execute('SELECT id FROM People WHERE name = ? LIMIT 1',
 					(acct, ))
 		try:
@@ -39,6 +41,7 @@ while True:
 	# js dummy for testing
 	# js = js_dummy
 	print("retrieving ", acct, "...")
+	# 2do we should probably keep the twitter user_ID in our DB as-well...
 	user_id = tuser.get_userID(acct)
 	url = tuser.create_url(user_id)
 	# in params we ask for the pinned tweet for eavh user and limit the results to 100 users
@@ -48,14 +51,12 @@ while True:
 	# print(json.dumps(js, indent=4, sort_keys=True))
 
 	cur.execute('UPDATE People SET retrieved=1 WHERE name = ?', (acct, ))
+	# in case the current account has no friends marks account as retrieved in db an continue
+	if 'data' not in js:
+		continue
 
 	countnew = 0
 	countold = 0
-
-	# in case the current account has no friends marks account as retrieved in db an continue
-	if 'data' not in js:
-		cur.execute('UPDATE Twitter SET retrieved = 1 WHERE name = ?', (acct, ))
-		continue
 
 	for u in js['data']:
 		friend = u['username']
